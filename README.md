@@ -33,7 +33,7 @@ To install the Shop Building Estimator application, download the executable file
 
 If you want to contribute to the project, feel free to check out the source code on GitHub:
 
-[View Code](https://github.com/Marysgithub321/Shop-Estimator.git)
+[View Code](https://github.com/Marysgithub321/SolidStructure)
 
 ## License
 
