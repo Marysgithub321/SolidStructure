@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Shop Construction Cost Calculator</title>
+    
+        <!-- Link to CSS -->
+        <link rel="stylesheet" href="styles.css" />
+    
+        <!-- Icons -->
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="icon" href="images/SolidStructureLogo.png" type="image/png">
+    
+        <!-- Hidden Logo -->
+        <img id="logo" src="images/logo.png" style="display: none" />
+    </head>
+    
+<body>
+<header>
+    <nav>
+        <h1>Shop Quote Calculator</h1>
+    </nav>
+</header>
+
+<main class="card-container">
+    <div class="card">
+    <h2>Shop Quote</h2>
+    <section class="date" style="display: flex">
+        <label for="date">Date:</label>
+        <input type="date" id="date" required />
+        <label for="jobNumber">Job Number:</label>
+        <input type="text" id="jobNumber" required />
+    </section>
+    <div class="section-bordered">
+        <h2>Customer Information</h2>
+        <section class="CustomerInfo">
+            <label for="customerName">Customer Name:</label>
+            <input type="text" id="customerName" required />
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="text" id="phoneNumber" required />
+            <label for="address">Address:</label>
+            <input type="text" id="address" required />
+        </section>
+    </div>
+
+    <div class="section-bordered">
+        <h2>Building Dimensions</h2>
+        <label for="buildingHeight">Height (ft):</label>
+        <select id="buildingHeight" name="height" required>
+            <option value="8">8 ft</option>
+            <option value="9">9 ft</option>
+            <option value="10">10 ft</option>
+            <option value="12">12 ft</option>
+            <option value="14">14 ft</option>
+            <option value="16">16 ft</option>
+        </select>
+
+        <label for="buildingWidth">Width (ft):</label>
+        <input type="number" id="buildingWidth" name="buildingWidth" required />
+
+        <label for="buildingLength">Length (ft):</label>
+        <input type="number" id="buildingLength" name="buildingLength" required />
+
+        <label for="shopDescription">Description:</label>
+        <input type="text" id="shopDescription" class="navigable" maxlength="50" />
+
+
+
+    </div>
+
+    <div class="section-bordered">
+        <h2>Roof</h2>
+        <label for="roofType">Roof Type:</label>
+        <select id="roofType" name="roofType" required>
+            <option value="steel">Steel Roof</option>
+            <option value="shingle">Shingle Roof</option>
+        </select>
+        <label for="roofWidth">Width (ft):</label>
+        <input type="number" id="roofWidth" name="roofWidth" required />
+        <label for="roofLength">Length (ft):</label>
+        <input type="number" id="roofLength" name="roofLength" required />
+
+        <label for="roofDescription">Description:</label>
+        <input type="text" id="roofDescription" class="navigable" maxlength="50" />
+
+
+    </div>
+
+    <div class="section-bordered">
+        <h2>Concrete Foundation</h2>
+        <label for="foundationWidth">Width (ft):</label>
+        <input type="number" id="foundationWidth" name="foundationWidth" required />
+        <label for="foundationLength">Length (ft):</label>
+        <input type="number" id="foundationLength" name="foundationLength" required />
+        <label for="foundationDescription">Description:</label>
+        <input type="text" id="foundationDescription" class="navigable" maxlength="50" />
+    </div>
+
+    <div class="section-bordered">
+        <h2>Concrete Floor</h2>
+        <div id="floor-sections">
+            <div class="floor-section" id="floor-section-1">
+                <label for="floorType-1">Thickness:</label>
+                <select id="floorType-1" name="floorType" required>
+                    <option value="4">4"</option>
+                    <option value="5">5"</option>
+                    <option value="6">6"</option>
+                </select>
+                <label for="floorWidth-1">Width (ft):</label>
+                <input type="number" id="floorWidth-1" name="floorWidth" required />
+                <label for="floorLength-1">Length (ft):</label>
+                <input type="number" id="floorLength-1" name="floorLength" required />
+                <label for="floorDescription-1">Description:</label>
+                <input type="text" id="floorDescription-1" class="navigable" maxlength="50" />
+                
+                <button type="button" onclick="removeFloor('floor-section-1')">Remove Floor</button>
+            </div>
+        </div>
+        <button type="button" onclick="addFloor()">Add Floor</button>
+    </div>
+    
+
+    <div class="section-bordered">
+        <h1>Garage Doors</h1>
+        <div id="garageDoors">
+            <!-- Garage door sections will be dynamically added here by JavaScript -->
+            <div>
+                <button type="button" id="addGarageDoorButton">Add Door</button>
+            </div>
+            
+    </div>   
+    </div>
+
+    <div class="section-bordered">
+        <h2>Man Doors</h2>
+        <label for="numManDoors">Number of Man Doors:</label>
+        <input type="number" id="numManDoors" name="numManDoors" min="0" />
+        <label for="manDoorDescription">Description:</label>
+        <input type="text" id="manDoorDescription" class="navigable" maxlength="50" />
+    </div>
+
+    <div class="section-bordered">
+        <h2>Windows</h2>
+        <label for="windowQuantity">Number of standard Windows:</label>
+        <input type="number" id="windowQuantity" name="windowQuantity" min="0" />
+        <label for="windowDescription">Description:</label>
+        <input type="text" id="windowDescription" class="navigable" maxlength="50" />
+    </div>
+
+    <div class="section-bordered">
+        <h2>Extra</h2>
+        <label for="extraDescription">Description:</label>
+        <input type="text" id="extraDescription" class="navigable" maxlength="60" />
+    </div>
+
+</main>
+<div class="card">
+    <h2>Material List</h2>
+
+    <div class="dropdown">
+        <button class="dropbtn">Material Prices</button>
+        <div class="dropdown-content">
+         
+            <label for="poleFoundationPrice">Pole Foundation Price:</label>
+            <input type="number" id="poleFoundationPrice" name="poleFoundationPrice" step="0.01" />
+
+            <label for="concreteFoundationPrice">Concrete Foundation Price:</label>
+            <input type="number" id="concreteFoundationPrice" name="concreteFoundationPrice" step="0.01" />
+
+            <label for="2x4x10Price">2x4x10' Price:</label>
+            <input type="number" id="2x4x10Price" name="2x4x10Price" step="0.01" />
+
+            <label for="2x4x16Price">2x4x16' Price:</label>
+            <input type="number" id="2x4x16Price" name="2x4x16Price" step="0.01" />
+
+            <label for="2x4x8Price">2x4x8' Price:</label>
+            <input type="number" id="2x4x8Price" name="2x4x8Price" step="0.01" />
+
+            <label for="2x6x10Price">2x6x10' Price:</label>
+            <input type="number" id="2x6x10Price" name="2x6x10Price" step="0.01" />
+
+            <label for="2x6x12Price">2x6x12' Price:</label>
+            <input type="number" id="2x6x12Price" name="2x6x12Price" step="0.01" />
+
+            <label for="2x6x14Price">2x6x14' Price:</label>
+            <input type="number" id="2x6x14Price" name="2x6x14Price" step="0.01" />
+
+            <label for="2x6x16Price">2x6x16' Price:</label>
+            <input type="number" id="2x6x16Price" name="2x6x16Price" step="0.01" />
+
+            <label for="plates2x6x16Price">Plates 2x6x16' Price:</label>
+            <input type="number" id="plates2x6x16Price" name="plates2x6x16Price" step="0.01" />
+
+            <label for="1x4x16Price">1x4x16 Price:</label>
+            <input type="number" id="1x4x16Price" name="1x4x16Price" step="0.01" />
+
+            <label for="2x8HeaderPrice">2x8 Header Price:</label>
+            <input type="number" id="2x8HeaderPrice" name="2x8HeaderPrice" step="0.01" />
+
+            <label for="2x10x8HeaderPrice">2x10x8 Header Price:</label>
+            <input type="number" id="2x10x8HeaderPrice" name="2x10x8HeaderPrice" step="0.01" />
+
+            <label for="2x10x10HeaderPrice">2x10x10 Header Price:</label>
+            <input type="number" id="2x10x10HeaderPrice" name="2x10x10HeaderPrice" step="0.01" />
+
+            <label for="2x10x10WindowHeaderPrice">2x10x10 Window Header Price:</label>
+            <input type="number" id="2x10x10WindowHeaderPrice" name="2x10x10WindowHeaderPrice" step="0.01" />
+
+
+            <label for="2x10x12HeaderPrice">2x10x12 Header Price:</label>
+            <input type="number" id="2x10x12HeaderPrice" name="2x10x12HeaderPrice" step="0.01" />
+
+            <label for="2x12x14LVLHeaderPrice">2x12x14 LVL Header Price:</label>
+            <input type="number" id="2x12x14LVLHeaderPrice" name="2x12x14LVLHeaderPrice" step="0.01" />
+
+            <label for="2x12x16LVLHeaderPrice">2x12x16 LVL Header Price:</label>
+            <input type="number" id="2x12x16LVLHeaderPrice" name="2x12x16LVLHeaderPrice" step="0.01" />
+
+            <label for="2x14x18LVLHeaderPrice">2x14x18 LVL Header Price:</label>
+            <input type="number" id="2x14x18LVLHeaderPrice" name="2x14x18LVLHeaderPrice" step="0.01" />
+
+            <label for="LVLHeaderPrice">LVL Header Price:</label>
+            <input type="number" id="LVLHeaderPrice" name="LVLHeaderPrice" step="0.01" />
+
+            <label for="2x8x16Price">2x8x16 Price:</label>
+            <input type="number" id="2x8x16Price" name="2x8x16Price" step="0.01" />
+
+            <label for="sqfWallsPrice">SQF of Walls Price:</label>
+            <input type="number" id="sqfWallsPrice" name="sqfWallsPrice" step="0.01" />
+
+            <label for="wValleyPrice">W Valley Price:</label>
+            <input type="number" id="wValleyPrice" name="wValleyPrice" step="0.01" />
+
+            <label for="8x12SFPrice">8x12 S&F Price:</label>
+            <input type="number" id="8x12SFPrice" name="8x12SFPrice" step="0.01" />
+
+            <label for="4x8SFPrice">4x8 S&F Price:</label>
+            <input type="number" id="4x8SFPrice" name="4x8SFPrice" step="0.01" />
+
+            <label for="9doorJamPrice">9'' Door Jam Price:</label>
+            <input type="number" id="9doorJamPrice" name="9doorJamPrice" step="0.01" />
+
+            <label for="jPrice">J Price:</label>
+            <input type="number" id="jPrice" name="jPrice" step="0.01" />
+
+            <label for="dripEdgePrice">Drip Edge Price:</label>
+            <input type="number" id="dripEdgePrice" name="dripEdgePrice" step="0.01" />
+
+            <label for="manDoorJPrice">Man Door J Price:</label>
+            <input type="number" id="manDoorJPrice" name="manDoorJPrice" step="0.01" />
+
+            <label for="manDoorDripEdgePrice">Man Door Drip Edge Price:</label>
+            <input type="number" id="manDoorDripEdgePrice" name="manDoorDripEdgePrice" step="0.01" />
+
+            <label for="gableDeviderPrice">Gable Devider Price:</label>
+            <input type="number" id="gableDeviderPrice" name="gableDeviderPrice" step="0.01" />
+
+            <label for="ratGuardPrice">Rat Guard Price:</label>
+            <input type="number" id="ratGuardPrice" name="ratGuardPrice" step="0.01" />
+
+            <label for="cornerWithJPrice">Corner with J Price:</label>
+            <input type="number" id="cornerWithJPrice" name="cornerWithJPrice" step="0.01" />
+
+            <label for="cornerBoxPrice">Corner Box Price:</label>
+            <input type="number" id="cornerBoxPrice" name="cornerBoxPrice" step="0.01" />
+
+            <label for="ridgeBoxPrice">Ridge Box Price:</label>
+            <input type="number" id="ridgeBoxPrice" name="ridgeBoxPrice" step="0.01" />
+
+            <label for="ridgeCapPrice">Ridge Cap Price:</label>
+            <input type="number" id="ridgeCapPrice" name="ridgeCapPrice" step="0.01" />
+
+            <label for="reRoofEavePrice">Re-roof Eave Price:</label>
+            <input type="number" id="reRoofEavePrice" name="reRoofEavePrice" step="0.01" />
+
+            <label for="reRoofGablePrice">Re-roof Gable Price:</label>
+            <input type="number" id="reRoofGablePrice" name="reRoofGablePrice" step="0.01" />
+
+            <label for="eaveStarterPrice">Eave Starter Price:</label>
+            <input type="number" id="eaveStarterPrice" name="eaveStarterPrice" step="0.01" />
+
+            <label for="gableStarterPrice">Gable Starter Price:</label>
+            <input type="number" id="gableStarterPrice" name="gableStarterPrice" step="0.01" />
+
+            <label for="sideWallFlashingPrice">Side Wall Flashing Price:</label>
+            <input type="number" id="sideWallFlashingPrice" name="sideWallFlashingPrice" step="0.01" />
+
+            <label for="endWallFlashingPrice">End Wall Flashing Price:</label>
+            <input type="number" id="endWallFlashingPrice" name="endWallFlashingPrice" step="0.01" />
+
+            <label for="garageDoorsPrice">Garage Doors Price:</label>
+            <input type="number" id="garageDoorsPrice" name="garageDoorsPrice" step="0.01" />
+
+            <label for="specialtyGarageDoorsPrice">Specialty Garage Doors Price:</label>
+            <input type="number" id="specialtyGarageDoorsPrice" name="specialtyGarageDoorsPrice" step="0.01" />
+
+            <label for="windowsPrice">Windows Price:</label>
+            <input type="number" id="windowsPrice" name="windowsPrice" step="0.01" />
+
+            <label for="specialtyWindowsPrice">Specialty Windows Price:</label>
+            <input type="number" id="specialtyWindowsPrice" name="specialtyWindowsPrice" step="0.01" />
+
+            <label for="manDoorsPrice">Man Doors Price:</label>
+            <input type="number" id="manDoorsPrice" name="manDoorsPrice" step="0.01" />
+
+            <label for="trussesPrice">Trusses Price:</label>
+            <input type="number" id="trussesPrice" name="trussesPrice" step="0.01" />
+
+            <label for="steelRoofingPrice">Steel Roofing Price:</label>
+            <input type="number" id="steelRoofingPrice" name="steelRoofingPrice" step="0.01" />
+
+            <label for="roofStrappingPrice">Roof Strapping Price:</label>
+            <input type="number" id="roofStrappingPrice" name="roofStrappingPrice" step="0.01" />
+
+
+            <label for="shinglesPrice">Shingles Price:</label>
+            <input type="number" id="shinglesPrice" name="shinglesPrice" step="0.01" />
+
+            <label for="plywoodPrice">Plywood Price:</label>
+            <input type="number" id="plywoodPrice" name="plywoodPrice" step="0.01" />
+
+            <label for="underlaymentPrice">Underlayment Price:</label>
+            <input type="number" id="underlaymentPrice" name="underlaymentPrice" step="0.01" />
+
+
+            <label for="4InchConcretePrice">4" Concrete Price:</label>
+            <input type="number" id="4InchConcretePrice" name="4InchConcretePrice" step="0.01" />
+
+            <label for="5InchConcretePrice">5" Concrete Price:</label>
+            <input type="number" id="5InchConcretePrice" name="5InchConcretePrice" step="0.01" />
+
+            <label for="6InchConcretePrice">6" Concrete Price:</label>
+            <input type="number" id="6InchConcretePrice" name="6InchConcretePrice" step="0.01" />
+
+            <label for="inFloorHeatPrice">In Floor Heat Price:</label>
+            <input type="number" id="inFloorHeatPrice" name="inFloorHeatPrice" step="0.01" />
+
+            <label for="excavationPrice">Excavation:</label>
+            <input type="number" id="excavationPrice" name="excavationPrice" step="0.01" />
+
+            <label for="electricalPrice">Electrical:</label>
+            <input type="number" id="electricalPrice" name="electricalPrice" step="0.01" />
+
+
+
+            <button type="button" id="updatePricesButton">Update Prices</button>
+
+        
+        </div>
+    </div>
+<div id="buildingMaterials">
+    <div class="section-bordered">
+        <h3>Foundation</h3>
+
+        <div class="grid-container">
+            <div class="grid-header">Item</div>
+            <div class="grid-header">Qty</div>
+            <div class="grid-header">Rate ($)</div>
+            <div class="grid-header">Qty x Rate</div>
+            <div class="grid-header">Markup</div>
+            <div class="grid-header">Total</div>
+
+             <!-- Concrete Foundation -->
+             <div>Concrete Foundation</div>
+             <input type="number" id="concreteFoundationQty" class="grid-input" oninput="calculateRow('concreteFoundation')" value="0"/>
+             <input type="number" id="concreteFoundationRate" class="grid-input" oninput="calculateRow('concreteFoundation')" value="65.00" step="0.01" />
+             <div id="concreteFoundationQtyRate">0</div>
+             <input type="number" id="concreteFoundationMarkup" class="grid-input" oninput="calculateRow('concreteFoundation')" value="0" step="0.01" />
+             <div id="concreteFoundationTotal">0</div>
+
+            <!-- Pole Foundation -->
+            <div>Pole Foundation</div>
+            <input type="number" id="poleFoundationQty" class="grid-input" oninput="calculateRow('poleFoundation')" value="0"/>
+            <input type="number" id="poleFoundationRate" class="grid-input" oninput="calculateRow('poleFoundation')" step="0.01" />
+            <div id="poleFoundationQtyRate">0</div>
+            <input type="number" id="poleFoundationMarkup" class="grid-input" oninput="calculateRow('poleFoundation')" value="0" step="0.01" />
+            <div id="poleFoundationTotal">0</div>
+
+            <div>Extra </div>
+            <input type="number" id="extraFoundationQty" class="grid-input" oninput="calculateSteelRow('extraFoundation')" value="0"/>
+            <input type="number" id="extraFoundationRate" class="grid-input" oninput="calculateSteelRow('extraFoundation')" step="0.01" />
+            <div id="extraFoundationQtyRate">0</div>
+            <input type="number" id="extraFoundationMarkup" class="grid-input" oninput="calculateSteelRow('extraFoundation')" value="0" step="0.01" />
+            <div id="extraFoundationTotal">0</div>
+
+
+
+           
+        </div>
+    </div>
+
+    <div class="section-bordered">
+        <h3>Framing</h3>
+        <div class="grid-container">
+            <div class="grid-header">Item</div>
+            <div class="grid-header">Qty</div>
+            <div class="grid-header">Rate ($)</div>
+            <div class="grid-header">Qty x Rate</div>
+            <div class="grid-header">Markup</div>
+            <div class="grid-header">Total</div>
+
+            <!-- Framing items -->
+            <div>2x4x10'</div>
+            <input type="number" id="2x4x10Qty" class="grid-input" oninput="calculateFramingRow('2x4x10')" value="0"/>
+            <input type="number" id="2x4x10Rate" class="grid-input" oninput="calculateFramingRow('2x4x10')" value="4.00" step="0.01" />
+            <div id="2x4x10QtyRate">0</div>
+            <input type="number" id="2x4x10Markup" class="grid-input" oninput="calculateFramingRow('2x4x10')" value="2" step="0.01" />
+            <div id="2x4x10Total">0</div>
+
+            <div>2X4X16'</div>
+            <input type="number" id="2x4x16Qty" class="grid-input" oninput="calculateFramingRow('2x4x16')" value="0"/>
+            <input type="number" id="2x4x16Rate" class="grid-input" oninput="calculateFramingRow('2x4x16')" value="6.75" step="0.01" />
+            <div id="2x4x16QtyRate">0</div>
+            <input type="number" id="2x4x16Markup" class="grid-input" oninput="calculateFramingRow('2x4x16')" value="2" step="0.01" />
+            <div id="2x4x16Total">0</div>
+
+            <div>2x4x8'</div>
+            <input type="number" id="2x4x8Qty" class="grid-input" oninput="calculateFramingRow('2x4x8')" value="0"/>
+            <input type="number" id="2x4x8Rate" class="grid-input" oninput="calculateFramingRow('2x4x8')" value="3.25" step="0.01" />
+            <div id="2x4x8QtyRate">0</div>
+            <input type="number" id="2x4x8Markup" class="grid-input" oninput="calculateFramingRow('2x4x8')" value="2" step="0.01" />
+            <div id="2x4x8Total">0</div>
+
+            <div>2x6x10'</div>
+            <input type="number" id="2x6x10Qty" class="grid-input" oninput="calculateFramingRow('2x6x10')" value="0"/>
+            <input type="number" id="2x6x10Rate" class="grid-input" oninput="calculateFramingRow('2x6x10')" value="18.70" step="0.01" />
+            <div id="2x6x10QtyRate">0</div>
+            <input type="number" id="2x6x10Markup" class="grid-input" oninput="calculateFramingRow('2x6x10')" value="2" step="0.01" />
+            <div id="2x6x10Total">0</div>
+
+            <div>2x6x12'</div>
+            <input type="number" id="2x6x12Qty" class="grid-input" oninput="calculateFramingRow('2x6x12')" value="0"/>
+            <input type="number" id="2x6x12Rate" class="grid-input" oninput="calculateFramingRow('2x6x12')" value="14.40" step="0.01" />
+            <div id="2x6x12QtyRate">0</div>
+            <input type="number" id="2x6x12Markup" class="grid-input" oninput="calculateFramingRow('2x6x12')" value="2" step="0.01" />
+            <div id="2x6x12Total">0</div>
+
+            <div>2x6x14'</div>
+            <input type="number" id="2x6x14Qty" class="grid-input" oninput="calculateFramingRow('2x6x14')" value="0"/>
+            <input type="number" id="2x6x14Rate" class="grid-input" oninput="calculateFramingRow('2x6x14')" value="16.00" step="0.01" />
+            <div id="2x6x14QtyRate">0</div>
+            <input type="number" id="2x6x14Markup" class="grid-input" oninput="calculateFramingRow('2x6x14')" value="2" step="0.01" />
+            <div id="2x6x14Total">0</div>
+
+            <div>2x6x16'</div>
+            <input type="number" id="2x6x16Qty" class="grid-input" oninput="calculateFramingRow('2x6x16')" value="0"/>
+            <input type="number" id="2x6x16Rate" class="grid-input" oninput="calculateFramingRow('2x6x16')" value="25.75" step="0.01" />
+            <div id="2x6x16QtyRate">0</div>
+            <input type="number" id="2x6x16Markup" class="grid-input" oninput="calculateFramingRow('2x6x16')" value="2" step="0.01" />
+            <div id="2x6x16Total">0</div>
+
+            <div>Plates 2x6x16'</div>
+            <input type="number" id="plates2x6x16Qty" class="grid-input" oninput="calculateFramingRow('plates2x6x16')" value="0"/>
+            <input type="number" id="plates2x6x16Rate" class="grid-input" oninput="calculateFramingRow('plates2x6x16')" value="25.75" step="0.01" />
+            <div id="plates2x6x16QtyRate">0</div>
+            <input type="number" id="plates2x6x16Markup" class="grid-input" oninput="calculateFramingRow('plates2x6x16')" value="2" step="0.01" />
+            <div id="plates2x6x16Total">0</div>
+
+
+            
+
+            <div>1x4x16</div>
+            <input type="number" id="1x4x16Qty" class="grid-input" oninput="calculateFramingRow('1x4x16')" value="0"/>
+            <input type="number" id="1x4x16Rate" class="grid-input" oninput="calculateFramingRow('1x4x16')" value="15.00" step="0.01" />
+            <div id="1x4x16QtyRate">0</div>
+            <input type="number" id="1x4x16Markup" class="grid-input" oninput="calculateFramingRow('1x4x16')" value="2" step="0.01" />
+            <div id="1x4x16Total">0</div>
+
+            <div>2x8x16</div>
+            <input type="number" id="2x8x16Qty" class="grid-input" oninput="calculateFramingRow('2x8x16')" value="0"/>
+            <input type="number" id="2x8x16Rate" class="grid-input" oninput="calculateFramingRow('2x8x16')" value="800.00" step="0.01" />
+            <div id="2x8x16QtyRate">0</div>
+            <input type="number" id="2x8x16Markup" class="grid-input" oninput="calculateFramingRow('2x8x16')" value="2" step="0.01" />
+            <div id="2x8x16Total">0</div>
+
+            <div>Extra</div>
+            <input type="number" id="extraFramingQty" class="grid-input" oninput="calculateFramingRow('extraFraming')" value="0"/>
+            <input type="number" id="extraFramingRate" class="grid-input" oninput="calculateFramingRow('extraFraming')" step="0.01" />
+            <div id="extraFramingQtyRate">0</div>
+            <input type="number" id="extraFramingMarkup" class="grid-input" oninput="calculateFramingRow('extraFraming')" value="2" step="0.01" />
+            <div id="extraFramingTotal">0</div>
+
+        </div>
+    </div>
+
+    <div class="section-bordered">
+        <h3>Steel</h3>
+        <div class="grid-container">
+            <div class="grid-header">Item</div>
+            <div class="grid-header">Qty</div>
+            <div class="grid-header">Rate</div>
+            <div class="grid-header">Qty x Rate</div>
+            <div class="grid-header">Markup</div>
+            <div class="grid-header">Total</div>
+
+            <div>SQF of walls</div>
+            <input type="number" id="sqfWallsQty" class="grid-input" oninput="calculateSteelRow('sqfWalls')" value="0" />
+            <input type="number" id="sqfWallsRate" class="grid-input" oninput="calculateSteelRow('sqfWalls')" value="1.80" step="0.01" />
+            <div id="sqfWallsQtyRate">0</div>
+            <input type="number" id="sqfWallsMarkup" class="grid-input" oninput="calculateSteelRow('sqfWalls')" value="2" step="0.01" />
+            <div id="sqfWallsTotal">0</div>
+           
+            <div>Gable divider</div>
+            <input type="number" id="gableDividerQty" class="grid-input" oninput="calculateSteelRow('gableDivider')" value="0" />
+            <input type="number" id="gableDividerRate" class="grid-input" oninput="calculateSteelRow('gableDivider')" value="11.88" step="0.01" />
+            <div id="gableDividerQtyRate">0</div>
+            <input type="number" id="gableDividerMarkup" class="grid-input" oninput="calculateSteelRow('gableDivider')" value="2" step="0.01" />
+            <div id="gableDividerTotal">0</div>
+
+            <div>Rat guard</div>
+            <input type="number" id="ratGuardQty" class="grid-input" oninput="calculateSteelRow('ratGuard')" value="0" />
+            <input type="number" id="ratGuardRate" class="grid-input" oninput="calculateSteelRow('ratGuard')" value="11.70" step="0.01" />
+            <div id="ratGuardQtyRate">0</div>
+            <input type="number" id="ratGuardMarkup" class="grid-input" oninput="calculateSteelRow('ratGuard')" value="2" step="0.01" />
+            <div id="ratGuardTotal">0</div>
+
+            <div>Corner with J</div>
+            <input type="number" id="cornerWithJQty" class="grid-input" oninput="calculateSteelRow('cornerWithJ')" value="0" />
+            <input type="number" id="cornerWithJRate" class="grid-input" oninput="calculateSteelRow('cornerWithJ')" value="25.00" step="0.01" />
+            <div id="cornerWithJQtyRate">0</div>
+            <input type="number" id="cornerWithJMarkup" class="grid-input" oninput="calculateSteelRow('cornerWithJ')" value="2" step="0.01" />
+            <div id="cornerWithJTotal">0</div>
+
+            <div>Corner box</div>
+            <input type="number" id="cornerBoxQty" class="grid-input" oninput="calculateSteelRow('cornerBox')" value="0" />
+            <input type="number" id="cornerBoxRate" class="grid-input" oninput="calculateSteelRow('cornerBox')" value="65.00" step="0.01" />
+            <div id="cornerBoxQtyRate">0</div>
+            <input type="number" id="cornerBoxMarkup" class="grid-input" oninput="calculateSteelRow('cornerBox')" value="2" step="0.01" />
+            <div id="cornerBoxTotal">0</div>
+
+            <div>Ridge box</div>
+            <input type="number" id="ridgeBoxQty" class="grid-input" oninput="calculateSteelRow('ridgeBox')" value="0" />
+            <input type="number" id="ridgeBoxRate" class="grid-input" oninput="calculateSteelRow('ridgeBox')" value="20.00" step="0.01" />
+            <div id="ridgeBoxQtyRate">0</div>
+            <input type="number" id="ridgeBoxMarkup" class="grid-input" oninput="calculateSteelRow('ridgeBox')" value="2" step="0.01" />
+            <div id="ridgeBoxTotal">0</div>
+
+            <div>Ridge cap</div>
+            <input type="number" id="ridgeCapQty" class="grid-input" oninput="calculateSteelRow('ridgeCap')" value="0" />
+            <input type="number" id="ridgeCapRate" class="grid-input" oninput="calculateSteelRow('ridgeCap')" value="20.00" step="0.01" />
+            <div id="ridgeCapQtyRate">0</div>
+            <input type="number" id="ridgeCapMarkup" class="grid-input" oninput="calculateSteelRow('ridgeCap')" value="2" step="0.01" />
+            <div id="ridgeCapTotal">0</div>
+
+            <div>Extra</div>
+            <input type="number" id="extraSteelQty" class="grid-input" oninput="calculateSteelRow('extraSteel')" value="0"/>
+            <input type="number" id="extraSteelRate" class="grid-input" oninput="calculateSteelRow('extraSteel')" step="0.01" />
+            <div id="extraSteelQtyRate">0</div>
+            <input type="number" id="extraSteelMarkup" class="grid-input" oninput="calculateSteelRow('extraSteel')" value="2" step="0.01" />
+            <div id="extraSteelTotal">0</div>
+
+
+            
+        </div>
+    </div>
+
+    <div class="section-bordered">
+        <h3>Garage Doors </h3>
+        <div class="grid-container">
+            <div class="grid-header">Item</div>
+            <div class="grid-header">Qty</div>
+            <div class="grid-header">Rate</div>
+            <div class="grid-header">Qty x Rate</div>
+            <div class="grid-header">Markup</div>
+            <div class="grid-header">Total</div>
+
+            <div>Garage doors</div>
+            <input type="number" id="garageDoorsQty" class="grid-input" oninput="calculateSteelRow('garageDoors')" value="0" />
+            <input type="number" id="garageDoorsRate" class="grid-input" oninput="calculateSteelRow('garageDoors')" value="100.00" step="0.01" />
+            <div id="garageDoorsQtyRate">0</div>
+            <input type="number" id="garageDoorsMarkup" class="grid-input" oninput="calculateSteelRow('garageDoors')" value="2" step="0.01" />
+            <div id="garageDoorsTotal">0</div>
+
+            <div>Specialty Garage doors</div>
+            <input type="number" id="specialtyGarageDoorsQty" class="grid-input" oninput="calculateRow('specialtyGarageDoors')" value="0" />
+            <input type="number" id="specialtyGarageDoorsRate" class="grid-input" oninput="calculateRow('specialtyGarageDoors')" step="0.01" />
+            <div id="specialtyGarageDoorsQtyRate">0</div>
+            <input type="number" id="specialtyGarageDoorsMarkup" class="grid-input" oninput="calculateRow('specialtyGarageDoors')" value="2" step="0.01" />
+            <div id="specialtyGarageDoorsTotal">0</div>
+
+           
+
+           
+            <div>9'' door jam</div>
+            <input type="number" id="9doorJamQty" class="grid-input" oninput="calculateSteelRow('9doorJam')" value="0" />
+            <input type="number" id="9doorJamRate" class="grid-input" oninput="calculateSteelRow('9doorJam')" value="22.00" step="0.01" />
+            <div id="9doorJamQtyRate">0</div>
+            <input type="number" id="9doorJamMarkup" class="grid-input" oninput="calculateSteelRow('9doorJam')" value="2" step="0.01" />
+            <div id="9doorJamTotal">0</div>
+
+            <div>J</div>
+            <input type="number" id="jQty" class="grid-input" oninput="calculateSteelRow('j')" value="0" />
+            <input type="number" id="jRate" class="grid-input" oninput="calculateSteelRow('j')" value="11.88" step="0.01" />
+            <div id="jQtyRate">0</div>
+            <input type="number" id="jMarkup" class="grid-input" oninput="calculateSteelRow('j')" value="2" step="0.01" />
+            <div id="jTotal">0</div>
+
+
+            <div>Drip edge</div>
+            <input type="number" id="dripEdgeQty" class="grid-input" oninput="calculateSteelRow('dripEdge')" value="0"/>
+            <input type="number" id="dripEdgeRate" class="grid-input" oninput="calculateSteelRow('dripEdge')" value="12.00" step="0.01" />
+            <div id="dripEdgeQtyRate">0</div>
+            <input type="number" id="dripEdgeMarkup" class="grid-input" oninput="calculateSteelRow('dripEdge')" value="2" step="0.01" />
+            <div id="dripEdgeTotal">0</div>
+
+            <div>2x8 header</div>
+            <input type="number" id="2x8HeaderQty" class="grid-input" oninput="calculateFramingRow('2x8Header')" value="0"/>
+            <input type="number" id="2x8HeaderRate" class="grid-input" oninput="calculateFramingRow('2x8Header')" value="14.50" step="0.01" />
+            <div id="2x8HeaderQtyRate">0</div>
+            <input type="number" id="2x8HeaderMarkup" class="grid-input" oninput="calculateFramingRow('2x8Header')" value="2" step="0.01" />
+            <div id="2x8HeaderTotal">0</div>
+
+           
+            <div>2x10x10 Header</div>
+            <input type="number" id="2x10x10HeaderQty" class="grid-input" oninput="calculateFramingRow('2x10x10Header')" value="0"/>
+            <input type="number" id="2x10x10HeaderRate" class="grid-input" oninput="calculateFramingRow('2x10x10Header')" value="40.00" step="0.01" />
+            <div id="2x10x10HeaderQtyRate">0</div>
+            <input type="number" id="2x10x10HeaderMarkup" class="grid-input" oninput="calculateFramingRow('2x10x10Header')" value="2" step="0.01" />
+            <div id="2x10x10HeaderTotal">0</div>
+
+            <div>2x10x12 Header</div>
+            <input type="number" id="2x10x12HeaderQty" class="grid-input" oninput="calculateFramingRow('2x10x12Header')" value="0"/>
+            <input type="number" id="2x10x12HeaderRate" class="grid-input" oninput="calculateFramingRow('2x10x12Header')" value="28.00" step="0.01" />
+            <div id="2x10x12HeaderQtyRate">0</div>
+            <input type="number" id="2x10x12HeaderMarkup" class="grid-input" oninput="calculateFramingRow('2x10x12Header')" value="2" step="0.01" />
+            <div id="2x10x12HeaderTotal">0</div>
+
+            <div>2X12X14 LVL Header</div>
+            <input type="number" id="2x12x14LVLHeaderQty" class="grid-input" oninput="calculateFramingRow('2x12x14LVLHeader')" value="0"/>
+            <input type="number" id="2x12x14LVLHeaderRate" class="grid-input" oninput="calculateFramingRow('2x12x14LVLHeader')" value="200.00" step="0.01" />
+            <div id="2x12x14LVLHeaderQtyRate">0</div>
+            <input type="number" id="2x12x14LVLHeaderMarkup" class="grid-input" oninput="calculateFramingRow('2x12x14LVLHeader')" value="2" step="0.01" />
+            <div id="2x12x14LVLHeaderTotal">0</div>
+
+            <div>2X12X16 LVL Header</div>
+            <input type="number" id="2x12x16LVLHeaderQty" class="grid-input" oninput="calculateFramingRow('2x12x16LVLHeader')" value="0"/>
+            <input type="number" id="2x12x16LVLHeaderRate" class="grid-input" oninput="calculateFramingRow('2x12x16LVLHeader')" value="500.00" step="0.01" />
+            <div id="2x12x16LVLHeaderQtyRate">0</div>
+            <input type="number" id="2x12x16LVLHeaderMarkup" class="grid-input" oninput="calculateFramingRow('2x12x16LVLHeader')" value="2" step="0.01" />
+            <div id="2x12x16LVLHeaderTotal">0</div>
+
+            <div>2X14X18 LVL Header</div>
+            <input type="number" id="2x14x18LVLHeaderQty" class="grid-input" oninput="calculateFramingRow('2x14x18LVLHeader')" value="0"/>
+            <input type="number" id="2x14x18LVLHeaderRate" class="grid-input" oninput="calculateFramingRow('2x14x18LVLHeader')" value="0.00" step="0.01" />
+            <div id="2x14x18LVLHeaderQtyRate">0</div>
+            <input type="number" id="2x14x18LVLHeaderMarkup" class="grid-input" oninput="calculateFramingRow('2x14x18LVLHeader')" value="2" step="0.01" />
+            <div id="2x14x18LVLHeaderTotal">0</div>
+            
+
+            <div>LVL Header</div>
+            <input type="number" id="LVLHeaderQty" class="grid-input" oninput="calculateFramingRow('LVLHeader')" value="0"/>
+            <input type="number" id="LVLHeaderRate" class="grid-input" oninput="calculateFramingRow('LVLHeader')" value="99.00" step="0.01" />
+            <div id="LVLHeaderQtyRate">0</div>
+            <input type="number" id="LVLHeaderMarkup" class="grid-input" oninput="calculateFramingRow('LVLHeader')" value="2" step="0.01" />
+            <div id="LVLHeaderTotal">0</div>
+
+            <div>Extra</div>
+            <input type="number" id="extraGarageDoorQty" class="grid-input" oninput="calculateSteelRow('extraGarageDoor')" value="0" />
+            <input type="number" id="extraGarageDoorRate" class="grid-input" oninput="calculateSteelRow('extraGarageDoor')" step="0.01" />
+            <div id="extraGarageDoorQtyRate">0</div>
+            <input type="number" id="extraGarageDoorMarkup" class="grid-input" oninput="calculateSteelRow('extraGarageDoor')" value="2" step="0.01" />
+            <div id="extraGarageDoorTotal">0</div>
+
+
+
+        </div>
+    </div>
+
+    <div class="section-bordered">
+        <h3>Man Doors</h3>
+        <div class="grid-container">
+            <div class="grid-header">Item</div>
+            <div class="grid-header">Qty</div>
+            <div class="grid-header">Rate</div>
+            <div class="grid-header">Qty x Rate</div>
+            <div class="grid-header">Markup</div>
+            <div class="grid-header">Total</div>
+
+            <div>Man doors</div>
+            <input type="number" id="manDoorsQty" class="grid-input" oninput="calculateSteelRow('manDoors')" value="0" />
+            <input type="number" id="manDoorsRate" class="grid-input" oninput="calculateSteelRow('manDoors')" value="0" step="0.01" />
+            <div id="manDoorsQtyRate">0</div>
+            <input type="number" id="manDoorsMarkup" class="grid-input" oninput="calculateSteelRow('manDoors')" value="2" step="0.01" />
+            <div id="manDoorsTotal">0</div>
+
+            <div>2X10X8 Header</div>
+            <input type="number" id="2x10x8HeaderQty" class="grid-input" oninput="calculateFramingRow('2x10x8Header')" value="0"/>
+            <input type="number" id="2x10x8HeaderRate" class="grid-input" oninput="calculateFramingRow('2x10x8Header')" value="18.00" step="0.01" />
+            <div id="2x10x8HeaderQtyRate">0</div>
+            <input type="number" id="2x10x8HeaderMarkup" class="grid-input" oninput="calculateFramingRow('2x10x8Header')" value="2" step="0.01" />
+            <div id="2x10x8HeaderTotal">0</div>
+
+            <div>Man Door J</div>
+            <input type="number" id="manDoorJQty" class="grid-input" oninput="calculateSteelRow('manDoorJ')" value="0" />
+            <input type="number" id="manDoorJRate" class="grid-input" oninput="calculateSteelRow('manDoorJ')" value="11.88" step="0.01" />
+            <div id="manDoorJQtyRate">0</div>
+            <input type="number" id="manDoorJMarkup" class="grid-input" oninput="calculateSteelRow('manDoorJ')" value="2" step="0.01" />
+            <div id="manDoorJTotal">0</div>
+
+            <div>Man Door Drip Edge</div>
+            <input type="number" id="manDoorDripEdgeQty" class="grid-input" oninput="calculateSteelRow('manDoorDripEdge')" value="0" />
+            <input type="number" id="manDoorDripEdgeRate" class="grid-input" oninput="calculateSteelRow('manDoorDripEdge')" value="12.00" step="0.01" />
+            <div id="manDoorDripEdgeQtyRate">0</div>
+            <input type="number" id="manDoorDripEdgeMarkup" class="grid-input" oninput="calculateSteelRow('manDoorDripEdge')" value="2" step="0.01" />
+            <div id="manDoorDripEdgeTotal">0</div>
+
+            <div>Extra</div>
+            <input type="number" id="extraManDoorQty" class="grid-input" oninput="calculateSteelRow('extraManDoor')" value="0" />
+            <input type="number" id="extraManDoorRate" class="grid-input" oninput="calculateSteelRow('extraManDoor')" step="0.01" />
+            <div id="extraManDoorQtyRate">0</div>
+            <input type="number" id="extraManDoorMarkup" class="grid-input" oninput="calculateSteelRow('extraManDoor')" value="2" step="0.01" />
+            <div id="extraManDoorTotal">0</div>
+
+
+
+
+
+            
+           
+
+        </div>
+    </div>
+
+    <div class="section-bordered">
+        <h3>Windows</h3>
+        <div class="grid-container">
+            <div class="grid-header">Item</div>
+            <div class="grid-header">Qty</div>
+            <div class="grid-header">Rate</div>
+            <div class="grid-header">Qty x Rate</div>
+            <div class="grid-header">Markup</div>
+            <div class="grid-header">Total</div>
+
+            <div>Standard Windows</div>
+            <input type="number" id="windowsQty" class="grid-input" oninput="calculateSteelRow('windows')" value="0" />
+            <input type="number" id="windowsRate" class="grid-input" oninput="calculateSteelRow('windows')" value="275.00" step="0.01" />
+            <div id="windowsQtyRate">0</div>
+            <input type="number" id="windowsMarkup" class="grid-input" oninput="calculateSteelRow('windows')" value="2" step="0.01" />
+            <div id="windowsTotal">0</div>
+
+            <div>Specialty Windows</div>
+            <input type="number" id="specialtyWindowsQty" class="grid-input" oninput="calculateRow('specialtyWindows')" value="0" />
+            <input type="number" id="specialtyWindowsRate" class="grid-input" oninput="calculateRow('specialtyWindows')" value="275.00" step="0.01" />
+            <div id="specialtyWindowsQtyRate">0</div>
+            <input type="number" id="specialtyWindowsMarkup" class="grid-input" oninput="calculateRow('specialtyWindows')" value="2" step="0.01" />
+            <div id="specialtyWindowsTotal">0</div>
+
+            <div>2x10x10 Window Header</div>
+            <input type="number" id="2x10x10WindowHeaderQty" class="grid-input" oninput="calculateFramingRow('2x10x10WindowHeader')" value="0" />
+            <input type="number" id="2x10x10WindowHeaderRate" class="grid-input" oninput="calculateFramingRow('2x10x10WindowHeader')" value="40.00" step="0.01" />
+            <div id="2x10x10WindowHeaderQtyRate">0</div>
+            <input type="number" id="2x10x10WindowHeaderMarkup" class="grid-input" oninput="calculateFramingRow('2x10x10WindowHeader')" value="2" step="0.01" />
+            <div id="2x10x10WindowHeaderTotal">0</div>
+            
+            <div>Extra</div>
+            <input type="number" id="extraWindowQty" class="grid-input" oninput="calculateSteelRow('extraWindow')" value="0" />
+            <input type="number" id="extraWindowRate" class="grid-input" oninput="calculateSteelRow('extraWindow')" step="0.01" />
+            <div id="extraWindowQtyRate">0</div>
+            <input type="number" id="extraWindowMarkup" class="grid-input" oninput="calculateSteelRow('extraWindow')" value="2" step="0.01" />
+            <div id="extraWindowTotal">0</div>
+            
+
+
+
+        </div>
+    </div>
+
+    <div class="section-bordered">
+        <h3>Roof/Trusses</h3>
+        <div class="grid-container">
+            <div class="grid-header">Item</div>
+            <div class="grid-header">Qty</div>
+            <div class="grid-header">Rate</div>
+            <div class="grid-header">Qty x Rate</div>
+            <div class="grid-header">Markup</div>
+            <div class="grid-header">Total</div>
+
+            <div>Trusses</div>
+            <input type="number" id="trussesQty" class="grid-input" oninput="calculateRoofRow('trusses')" value="0" />
+            <input type="number" id="trussesRate" class="grid-input" oninput="calculateRoofRow('trusses')" value="0" step="0.01" />
+            <div id="trussesQtyRate">0</div>
+            <input type="number" id="trussesMarkup" class="grid-input" oninput="calculateRoofRow('trusses')" value="0" step="0.01" />
+            <div id="trussesTotal">0</div>
+
+            <div>Steel Roofing</div>
+            <input type="number" id="steelRoofingQty" class="grid-input" oninput="calculateRoofRow('steel')" value="0" />
+            <input type="number" id="steelRoofingRate" class="grid-input" oninput="calculateRoofRow('steel')" value="1.80" step="0.01" />
+            <div id="steelRoofingQtyRate">0</div>
+            <input type="number" id="steelRoofingMarkup" class="grid-input" oninput="calculateRoofRow('steel')" value="2" step="0.01" />
+            <div id="steelRoofingTotal">0</div>
+
+            <div>1x4x16 Roof Strapping</div>
+            <input type="number" id="roofStrappingQty" class="grid-input" oninput="calculateRoofRow('roofStrapping')" value="0" />
+            <input type="number" id="roofStrappingRate" class="grid-input" oninput="calculateRoofRow('roofStrapping')" value="10" step="0.01" />
+            <div id="roofStrappingQtyRate">0</div>
+            <input type="number" id="roofStrappingMarkup" class="grid-input" oninput="calculateRoofRow('roofStrapping')" value="2" step="0.01" />
+            <div id="roofStrappingTotal">0</div>
+
+            <div>8x12 S&F</div>
+            <input type="number" id="8x12SFQty" class="grid-input" oninput="calculateSteelRow('8x12SF')" value="0" />
+            <input type="number" id="8x12SFRate" class="grid-input" oninput="calculateSteelRow('8x12SF')" value="50.00" step="0.01" />
+            <div id="8x12SFQtyRate">0</div>
+            <input type="number" id="8x12SFMarkup" class="grid-input" oninput="calculateSteelRow('8x12SF')" value="2" step="0.01" />
+            <div id="8x12SFTotal">0</div>
+
+            <div>4x8 S&F</div>
+            <input type="number" id="4x8SFQty" class="grid-input" oninput="calculateSteelRow('4x8SF')" value="0" />
+            <input type="number" id="4x8SFRate" class="grid-input" oninput="calculateSteelRow('4x8SF')" value="46.30" step="0.01" />
+            <div id="4x8SFQtyRate">0</div>
+            <input type="number" id="4x8SFMarkup" class="grid-input" oninput="calculateSteelRow('4x8SF')" value="2" step="0.01" />
+            <div id="4x8SFTotal">0</div>
+
+
+            <div>Shingles</div>
+            <input type="number" id="shinglesQty" class="grid-input" oninput="calculateRoofRow('shingles')" value="0" />
+            <input type="number" id="shinglesRate" class="grid-input" oninput="calculateRoofRow('shingles')" value="32" step="0.01" />
+            <div id="shinglesQtyRate">0</div>
+            <input type="number" id="shinglesMarkup" class="grid-input" oninput="calculateRoofRow('shingles')" value="2" step="0.01" />
+            <div id="shinglesTotal">0</div>
+
+            <div>Underlayment</div>
+            <input type="number" id="underlaymentQty" class="grid-input" oninput="calculateRoofRow('underlayment')" value="0" />
+            <input type="number" id="underlaymentRate" class="grid-input" oninput="calculateRoofRow('underlayment')" value="32" step="0.01" />
+            <div id="underlaymentQtyRate">0</div>
+            <input type="number" id="underlaymentMarkup" class="grid-input" oninput="calculateRoofRow('underlayment')" value="2" step="0.01" />
+            <div id="underlaymentTotal">0</div>
+
+            <div>Plywood</div>
+            <input type="number" id="plywoodQty" class="grid-input" oninput="calculateRoofRow('plywood')" value="0" />
+            <input type="number" id="plywoodRate" class="grid-input" oninput="calculateRoofRow('plywood')" value="50" step="0.01" />
+            <div id="plywoodQtyRate">0</div>
+            <input type="number" id="plywoodMarkup" class="grid-input" oninput="calculateRoofRow('plywood')" value="2" step="0.01" />
+            <div id="plywoodTotal">0</div>
+
+            <div>Extra</div>
+            <input type="number" id="extraRoofTrussesQty" class="grid-input" oninput="calculateSteelRow('extraRoofTrusses')" value="0"/>
+            <input type="number" id="extraRoofTrussesRate" class="grid-input" oninput="calculateSteelRow('extraRoofTrusses')" step="0.01" />
+            <div id="extraRoofTrussesQtyRate">0</div>
+            <input type="number" id="extraRoofTrussesMarkup" class="grid-input" oninput="calculateSteelRow('extraRoofTrusses')" value="2" step="0.01" />
+            <div id="extraRoofTrussesTotal">0</div>
+
+
+
+        
+
+
+        </div>
+    </div>
+
+    <div class="section-bordered">
+        <h3>Floor</h3>
+        <div class="grid-container">
+            <div class="grid-header">Item</div>
+            <div class="grid-header">Qty</div>
+            <div class="grid-header">Rate</div>
+            <div class="grid-header">Qty x Rate</div>
+            <div class="grid-header">Markup</div>
+            <div class="grid-header">Total</div>
+
+            <div>4'' Concrete</div>
+            <input type="number" id="4InchConcreteQty" class="grid-input" oninput="calculateFloorRow('4InchConcrete')" value="0" />
+            <input type="number" id="4InchConcreteRate" class="grid-input" oninput="calculateFloorRow('4InchConcrete')" value="4.50" step="0.01" />
+            <div id="4InchConcreteQtyRate">0</div>
+            <input type="number" id="4InchConcreteMarkup" class="grid-input" oninput="calculateFloorRow('4InchConcrete')" value="0" step="0.01" />
+            <div id="4InchConcreteTotal">0</div>
+
+            <div>5'' Concrete</div>
+            <input type="number" id="5InchConcreteQty" class="grid-input" oninput="calculateFloorRow('5InchConcrete')" value="0" />
+            <input type="number" id="5InchConcreteRate" class="grid-input" oninput="calculateFloorRow('5InchConcrete')" value="4.30" step="0.01" />
+            <div id="5InchConcreteQtyRate">0</div>
+            <input type="number" id="5InchConcreteMarkup" class="grid-input" oninput="calculateFloorRow('5InchConcrete')" value="0" step="0.01" />
+            <div id="5InchConcreteTotal">0</div>
+
+            <div>6'' Concrete</div>
+            <input type="number" id="6InchConcreteQty" class="grid-input" oninput="calculateFloorRow('6InchConcrete')" value="0" />
+            <input type="number" id="6InchConcreteRate" class="grid-input" oninput="calculateFloorRow('6InchConcrete')" value="4.85" step="0.01" />
+            <div id="6InchConcreteQtyRate">0</div>
+            <input type="number" id="6InchConcreteMarkup" class="grid-input" oninput="calculateFloorRow('6InchConcrete')" value="0" step="0.01" />
+            <div id="6InchConcreteTotal">0</div>
+
+            <div>In floor heat</div>
+            <input type="number" id="inFloorHeatQty" class="grid-input" oninput="calculateFloorRow('inFloorHeat')" value="0" />
+            <input type="number" id="inFloorHeatRate" class="grid-input" oninput="calculateFloorRow('inFloorHeat')" step="0.01" />
+            <div id="inFloorHeatQtyRate">0</div>
+            <input type="number" id="inFloorHeatMarkup" class="grid-input" oninput="calculateFloorRow('inFloorHeat')" value="0" step="0.01" />
+            <div id="inFloorHeatTotal">0</div>
+
+            <div>Extra</div>
+            <input type="number" id="extraFloorQty" class="grid-input" oninput="calculateSteelRow('extraFloor')" value="0"/>
+            <input type="number" id="extraFloorRate" class="grid-input" oninput="calculateSteelRow('extraFloor')" step="0.01" />
+            <div id="extraFloorQtyRate">0</div>
+            <input type="number" id="extraFloorMarkup" class="grid-input" oninput="calculateSteelRow('extraFloor')" value="2" step="0.01" />
+            <div id="extraFloorTotal">0</div>
+
+
+
+
+        </div>
+    </div>
+
+    <div class="section-bordered">
+        <h3>Extra</h3>
+        <div class="grid-container">
+            <div class="grid-header">Item</div>
+            <div class="grid-header">Qty</div>
+            <div class="grid-header">Rate</div>
+            <div class="grid-header">Qty x Rate</div>
+            <div class="grid-header">Markup</div>
+            <div class="grid-header">Total</div>
+
+            <!-- Excavation -->
+            <div>Excavation</div>
+            <input type="number" id="excavationQty" class="grid-input" oninput="calculateRow('excavation')" value="0" />
+            <input type="number" id="excavationRate" class="grid-input" oninput="calculateRow('excavation')" step="0.01" />
+            <div id="excavationQtyRate">0</div>
+            <input type="number" id="excavationMarkup" class="grid-input" oninput="calculateRow('excavation')" value="0" step="0.01" />
+            <div id="excavationTotal">0</div>
+
+            <!-- Electrical -->
+            <div>Electrical</div>
+            <input type="number" id="electricalQty" class="grid-input" oninput="calculateRow('electrical')"  value="0"/>
+            <input type="number" id="electricalRate" class="grid-input" oninput="calculateRow('electrical')" step="0.01" />
+            <div id="electricalQtyRate">0</div>
+            <input type="number" id="electricalMarkup" class="grid-input" oninput="calculateRow('electrical')" value="0" step="0.01" />
+            <div id="electricalTotal">0</div>
+
+            <div>Re-roof Eave</div>
+            <input type="number" id="reRoofEaveQty" class="grid-input" oninput="calculateSteelRow('reRoofEave')" value="0"/>
+            <input type="number" id="reRoofEaveRate" class="grid-input" oninput="calculateSteelRow('reRoofEave')" step="0.01" />
+            <div id="reRoofEaveQtyRate">0</div>
+            <input type="number" id="reRoofEaveMarkup" class="grid-input" oninput="calculateSteelRow('reRoofEave')" value="2" step="0.01" />
+            <div id="reRoofEaveTotal">0</div>
+
+            <div>Re-roof gable</div>
+            <input type="number" id="reRoofGableQty" class="grid-input" oninput="calculateSteelRow('reRoofGable')" value="0"/>
+            <input type="number" id="reRoofGableRate" class="grid-input" oninput="calculateSteelRow('reRoofGable')" step="0.01" />
+            <div id="reRoofGableQtyRate">0</div>
+            <input type="number" id="reRoofGableMarkup" class="grid-input" oninput="calculateSteelRow('reRoofGable')" value="2" step="0.01" />
+            <div id="reRoofGableTotal">0</div>
+
+            <div>W valley</div>
+            <input type="number" id="wValleyQty" class="grid-input" oninput="calculateSteelRow('wValley')" value="0"/>
+            <input type="number" id="wValleyRate" class="grid-input" oninput="calculateSteelRow('wValley')" value="22.00" step="0.01" />
+            <div id="wValleyQtyRate">0</div>
+            <input type="number" id="wValleyMarkup" class="grid-input" oninput="calculateSteelRow('wValley')" value="2" step="0.01" />
+            <div id="wValleyTotal">0</div>
+
+            <div>Eave starter</div>
+            <input type="number" id="eaveStarterQty" class="grid-input" oninput="calculateSteelRow('eaveStarter')" value="0"/>
+            <input type="number" id="eaveStarterRate" class="grid-input" oninput="calculateSteelRow('eaveStarter')" step="0.01" />
+            <div id="eaveStarterQtyRate">0</div>
+            <input type="number" id="eaveStarterMarkup" class="grid-input" oninput="calculateSteelRow('eaveStarter')" value="2" step="0.01" />
+            <div id="eaveStarterTotal">0</div>
+
+            <div>Gable starter</div>
+            <input type="number" id="gableStarterQty" class="grid-input" oninput="calculateSteelRow('gableStarter')" value="0"/>
+            <input type="number" id="gableStarterRate" class="grid-input" oninput="calculateSteelRow('gableStarter')" step="0.01" />
+            <div id="gableStarterQtyRate">0</div>
+            <input type="number" id="gableStarterMarkup" class="grid-input" oninput="calculateSteelRow('gableStarter')" value="2" step="0.01" />
+            <div id="gableStarterTotal">0</div>
+
+            <div>Side wall flashing</div>
+            <input type="number" id="sideWallFlashingQty" class="grid-input" oninput="calculateSteelRow('sideWallFlashing')" value="0"/>
+            <input type="number" id="sideWallFlashingRate" class="grid-input" oninput="calculateSteelRow('sideWallFlashing')" value="25.00" step="0.01" />
+            <div id="sideWallFlashingQtyRate">0</div>
+            <input type="number" id="sideWallFlashingMarkup" class="grid-input" oninput="calculateSteelRow('sideWallFlashing')" value="2" step="0.01" />
+            <div id="sideWallFlashingTotal">0</div>
+
+            <div>End wall flashing</div>
+            <input type="number" id="endWallFlashingQty" class="grid-input" oninput="calculateSteelRow('endWallFlashing')" value="0"/>
+            <input type="number" id="endWallFlashingRate" class="grid-input" oninput="calculateSteelRow('endWallFlashing')" step="0.01" />
+            <div id="endWallFlashingQtyRate">0</div>
+            <input type="number" id="endWallFlashingMarkup" class="grid-input" oninput="calculateSteelRow('endWallFlashing')" value="2" step="0.01" />
+            <div id="endWallFlashingTotal">0</div>
+
+            <div>Extra Item</div>
+            <input type="number" id="extraItemQty" class="grid-input" oninput="calculateSteelRow('extraItem')" value="0"/>
+            <input type="number" id="extraItemRate" class="grid-input" oninput="calculateSteelRow('extraItem')" step="0.01" />
+            <div id="extraItemQtyRate">0</div>
+            <input type="number" id="extraItemMarkup" class="grid-input" oninput="calculateSteelRow('extraItem')" value="2" step="0.01" />
+            <div id="extraItemTotal">0</div>
+
+
+           
+        </div>
+    </div>
+</div>
+
+    <div class="section-total-costs">
+        <h2>Total Costs</h2>
+        <p>Subtotal: <span id="subTotal">$0.00</span></p>
+        <p>GST/HST (13%): <span id="taxAmount">$0.00</span></p>
+        <p>Total: <span id="totalAll">$0.00</span></p>
+   
+        <button id="getQuoteButton">Get Quote</button>
+<button id="priceBreakdownButton">Price Breakdown</button>
+<img id="logo" src="images/logo.png" style="display: none" />
+
+
+</div>
+
+<footer>
+    <p>&copy; 2024 Solid Structure Co.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="js/prices.js"></script>
+<script src="js/calculations.js"></script> <!-- Load calculations.js before getQuote.js -->
+<script src="js/roof.js"></script>
+<script src="js/windows.js"></script>
+<script src="js/concreteFloor.js"></script>
+<script src="js/concreteFoundation.js"></script>
+<script src="js/manDoors.js"></script>
+<script src="js/buildingDimensions.js"></script>
+<script src="js/uiInteractions.js"></script>
+<script src="js/getQuote.js"></script> <!-- PDF generation script -->
+<script src="js/priceBreakdown.js"></script>
+<script src="js/main.js"></script>
+<script src="js/garageDoors.js"></script>
+<script src="js/eventListener.js"></script>
+
+</body>
+</html>
